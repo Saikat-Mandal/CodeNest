@@ -1,45 +1,84 @@
 import React, { useState } from 'react'
-import UserIcon from '../components/UserIcon'
-import Button from "../components/Button"
-import MainEditor from './MainEditor'
+
+import Editor from '@monaco-editor/react';
+
+
 function EditorPage() {
 
-  const [ clients ,setClients] = useState([
-    {socketId : 1, username : "Saikat" },
-    {socketId : 2, username : "Akshay" },
-    {socketId : 3, username : "vitamin" },
-    {socketId : 4, username : "lodu" },
-    {socketId : 5, username : "rishav" },
-  ])
+    // get the value from editor 
+    const [editorValue, setEditorValue] = useState("")
+    const handleEditorChange = (value, event) => {
+        setEditorValue(value)
+    }
+
+    // value from options state 
+    const [selectValue, setSelectValue] = useState("Python")
+
+    // files array 
+    const files = {
+        "script.py": {
+            name: "script.py",
+            language: "python",
+            value: "Here is some python text"
+        },
+        "index.html": {
+            name: "index.html",
+            language: "html",
+            value: "Here is some html text"
+        }
+
+    }
+
+    // file state 
+    const [filename, setFileName] = useState("script.py")
+    const file = files[filename]
+    // console.log(filename);
 
 
-  return (
-    <div className=' flex justify-between'>
-        <div className=' flex  flex-col justify-between  bg-slate-700 py-6 px-10'>
-            <div>
-            <h1 className='text-white tracking-widest text-2xl'>LOGO</h1>
-            <p className=' text-white py-3'>connected</p>
+
+
+    return (
+        <div className=' flex h-screen w-full'>
+            <div className='h-full w-1/6 bg-black text-white f'>
+                <p className=' text-3xl text-center py-5'>Attendees</p>
+                <div className=' p-6'>
+                    <div className=' h-14 w-14 border border-gray-300 flex justify-center items-center rounded-lg'>
+                        Saikat
+                    </div>
+                </div>
             </div>
-            <div className=' grid grid-cols-2 gap-6'>
-              {
-                clients.map((user)=>{
-                  return <UserIcon key={clients.socketId} name={user.username}  />
-                })
-              }
-          
-            </div>
-            
-                <Button text="copy room id"/>
-                <Button text="leave"/>
-      
-         
-        </div>
+            <div className=' flex flex-col h-full w-5/6'>
+                {/* code editor  */}
+                <div className=' h-4/6'>
+                    <Editor
+                        onChange={handleEditorChange}
+                        theme="vs-dark"
+                        height="100%"
+                        width="100%"
+                        defaultLanguage={file.language}
+                        path={file.name}
+                        defaultValue={file.path}
+                    />
+                </div>
 
-        <div className="right bg-slate-400 w-full">
-          <MainEditor/>
+                {/* terminal  */}
+                <div className=' flex h-2/6'>
+                    <div className=' bg-slate-700 p-2 w-4/6 '>
+                        <div className=' p-2 border border-white border-dashed h-full'>
+
+                        </div>
+                    </div>
+                    <div className='p-2 w-2/6 bg-black t'>
+                        {/* <button onClick={onChangeLanguage} className='bg-teal-400 text-black py-2 px-3 rounded-md'>Change</button> */}
+                        <select name="" id="" onChange={(e) => setSelectValue(e.target.value)}>
+                            <option value="python">Python</option>
+                            <option value="html">Html</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default EditorPage
