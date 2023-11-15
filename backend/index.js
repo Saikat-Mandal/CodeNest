@@ -4,21 +4,31 @@ require('dotenv').config()
 const authRoutes = require("./routes/user.js")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
-// const { Server } = require("socket.io-client");
+const { Server }  = require("socket.io");
+
+// express app creation 
 const app = express();
 
-// const io = new Server(server);
+const http = require("http")
+const server = http.createServer(app)
+const io = new Server(server , {
+  cors:{
+    origin:"http://localhost:3000",
+    methods:["GET" , "POST"],
+}
+})
+
+// socket io 
+io.on('connection', (socket) => {
+  console.log('a user connected' , socket.id);
+});
+
+
 // app using packages
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-    cors({
-      origin: "http://localhost:3000",
-      credentials: true, //access-control-allow-credentials:true
-      optionSuccessStatus: 200,
-    })
-  );
+
 app.use("/auth" , authRoutes)
 
 // database connection 
@@ -50,4 +60,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/codenestDb')
 // Socket.io
 
 
-app.listen(4000, () => console.log("listining to port", 4000));
+// socket io config 
+
+
+
+
+server.listen(4000, () => console.log("listining to port", 4000));

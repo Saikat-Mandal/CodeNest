@@ -1,13 +1,15 @@
-import { io } from "socket.io-client";
+import {io} from "socket.io-client"
 
-export const initSocket = async () => {
+const socket = io();
+
+
+export const initSocket = async ()=>{
   const options = {
-    "force new connectoin": true,
-    reconnectionAttempt: "Infinity",
-    timeout: 1000,
-    transports: ["websocket"],
-  };
+    "force new connection" :"Infinity",
+    reconnectionAttempt : true,
+    timeout : 10000,
+    transport : ["websocket"]
+  }
 
-  //   this function return instance of a socket
-  return io("http://localhost:4000", options);
-};
+  return io("http://localhost:4000" , options)
+}

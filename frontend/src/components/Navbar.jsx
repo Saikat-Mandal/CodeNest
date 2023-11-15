@@ -32,7 +32,7 @@ function Navbar() {
               <NavLink to="/about">About</NavLink>
             </ul>
           ) : (
-            <ul className="md:flex items-center gap-6 text-gray-300">
+            <ul className="md:flex items-center gap-6 ">
 
               <NavLink className=" hover:text-teal-400" to="/working">How it works</NavLink>
               <NavLink className=" hover:text-teal-400" to="/docs">Docs</NavLink>
@@ -49,7 +49,7 @@ function Navbar() {
         {userId && <button onClick={onLogout} className="border-2 text-white border-white rounded-md px-4 py-1">Logout</button>}
         {userId &&
           <NavLink
-            to="/join"
+            to="join"
             className=" border-2 text-white border-white rounded-md px-4 py-1"
           >
             Try for free

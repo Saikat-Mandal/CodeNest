@@ -20,10 +20,9 @@ function Login() {
             }, { withCredentials: true })
             alert(response.data.message)
             localStorage.setItem("userId", response.data.id)
-            console.log(response);
-            navigate("/")
             setEmail("")
             setPassword("")
+            navigate("/")
         } catch (error) {
             console.log(error);
         }

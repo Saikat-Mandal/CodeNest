@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import Editor from '@monaco-editor/react';
+import { initSocket } from '../socket';
+import Actions from '../actions';
 
 
 function EditorPage() {
@@ -35,6 +37,16 @@ function EditorPage() {
     // console.log(filename);
 
 
+    // socket 
+    const socketRef = useRef(null)
+
+    useEffect(() => {
+        const init = async () => {
+            socketRef.current = await initSocket()
+            socketRef.current.emit(Actions.JOIN)
+        }
+        init()
+    }, [])
 
 
     return (

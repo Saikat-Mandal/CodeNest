@@ -10,7 +10,7 @@ import EditorPage from "./pages/EditorPage";
 function App() {
 
   const userId = useGetUserId()
-console.log(userId);
+
   return (
     <div>
       {
@@ -18,15 +18,15 @@ console.log(userId);
        
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="/join" element={<Join />} />
+            <Route exact path="/join" element={<Join />} />
            <Route path="/join/:roomId" element={<EditorPage />} />
            <Route path="*" element={<Navigate to="/" />} />
          </Routes>
         ) : (
           <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
+          <Route exact path="/login" element={<Login/>} />
+          <Route exact path="/register" element={<Register/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         )
